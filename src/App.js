@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import InfiniteImage from './components/InfiniteImage';
+import InfiniteImage from './components/InfiniteImage2';
 
 class App extends Component {
   render() {
