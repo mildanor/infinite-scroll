@@ -13,7 +13,9 @@ class InfiniteImage extends React.Component {
             isLoading: false,
             windowHeight: window.innerHeight,
             image: '',
-            images: []
+            images: [],
+            timestamp: 1500348260,
+            increaseInterval: 20
         };
         this.handleResize = this.handleResize.bind(this);
         window.onscroll = () => {
@@ -64,8 +66,11 @@ class InfiniteImage extends React.Component {
       
         loadUsers = () => {
         //calculate height of screen to know how much height should be filled in
-        var callTime = Math.round(window.innerHeight / 300) +1;
-        var timestamp = 1500348260;
+        this.setState({ isLoading: true });
+        var callTime = 6;
+        //var callTime = Math.round(window.innerHeight / 300) +1;
+        var timestamp = this.state.timestamp;
+        var increaseInterval = this.state.increaseInterval;
         let imagesNow = [];
         //var images =[];
         for (let i = 0; i < callTime; i++) {
@@ -79,9 +84,18 @@ class InfiniteImage extends React.Component {
             this.setState({
                 images: imagesNow,
             })
-            timestamp = timestamp + 20;
+            timestamp = timestamp + increaseInterval;
+            this.setState({
+                timestamp: timestamp,
+            })
         })
-    }   
+    }   this.setState({
+        // Note: Depending on the API you're using, this value may
+        // be returned as part of the payload to indicate that there
+        // is no additional data to be loaded
+        hasMore: (this.state.images.length < 100),
+        isLoading: false,
+    }) 
 }
       
         render() {
@@ -90,7 +104,9 @@ class InfiniteImage extends React.Component {
             hasMore,
             isLoading,
             images,
+            timestamp
           } = this.state;
+          console.log(timestamp);
           return (
             <div> 
             {images.map((img, i) => (
@@ -99,11 +115,12 @@ class InfiniteImage extends React.Component {
                 src={img}
                 style={{
                 borderRadius: '50%',
-                height: 300,
+                height: 500,
                 marginRight: 20,
-                width: 300,
+                width: 500,
                 }}
                 />
+                <p>test {img} </p>
                 </Fragment>
                 ))}
               {error &&
