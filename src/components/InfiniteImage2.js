@@ -12,7 +12,6 @@ class InfiniteImage extends React.Component {
             hasMore: true,
             isLoading: false,
             windowHeight: window.innerHeight,
-            image: '',
             images: [],
             timestamp: 1500348260,
             increaseInterval: 20
@@ -32,7 +31,7 @@ class InfiniteImage extends React.Component {
             // * there's an error
             // * it's already loading
             // * there's nothing left to load
-            if (error || isLoading || !hasMore) return;
+            if (error || isLoading || !hasMore ) return;
       
             // Checks that the page has scrolled to the bottom
             if (
@@ -79,6 +78,7 @@ class InfiniteImage extends React.Component {
             .then(response => response.blob())
            .then(images => {
             // Then create a local URL for that image and print it 
+            console.log(timestamp);
             var createImage = URL.createObjectURL(images);
             imagesNow.push(createImage);
             this.setState({
@@ -87,13 +87,14 @@ class InfiniteImage extends React.Component {
             timestamp = timestamp + increaseInterval;
             this.setState({
                 timestamp: timestamp,
+                hasMore: (this.state.timestamp < 1500349260),
             })
         })
     }   this.setState({
         // Note: Depending on the API you're using, this value may
         // be returned as part of the payload to indicate that there
         // is no additional data to be loaded
-        hasMore: (this.state.images.length < 100),
+        //hasMore: (this.state.timestamp < 1500349260),
         isLoading: false,
     }) 
 }
@@ -106,7 +107,7 @@ class InfiniteImage extends React.Component {
             images,
             timestamp
           } = this.state;
-          console.log(timestamp);
+         // console.log(timestamp);
           return (
             <div> 
             {images.map((img, i) => (
@@ -114,13 +115,11 @@ class InfiniteImage extends React.Component {
                 <img
                 src={img}
                 style={{
-                borderRadius: '50%',
-                height: 500,
+                height: 250,
                 marginRight: 20,
-                width: 500,
+                width: 250,
                 }}
                 />
-                <p>test {img} </p>
                 </Fragment>
                 ))}
               {error &&
