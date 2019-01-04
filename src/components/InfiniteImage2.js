@@ -71,7 +71,7 @@ class InfiniteImage extends React.Component {
         //var callTime = Math.round(window.innerHeight / 300) +1;
         var timestamp = this.state.timestamp;
         var increaseInterval = this.state.increaseInterval;
-        let imagesNow = [];
+        let imagesNow = this.state.images;
         //var images =[];
         for (let i = 0; i < callTime; i++) {
             //console.log(timestamp);
