@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, {Fragment }from 'react';
 
 
 //const timestamp = 1500348260;
@@ -11,8 +11,11 @@ class InfiniteImage extends React.Component {
             error: false,
             hasMore: true,
             isLoading: false,
-            image: ''
+            windowHeight: window.innerHeight,
+            image: '',
+            images: []
         };
+        this.handleResize = this.handleResize.bind(this);
         window.onscroll = () => {
             const {
               loadUsers,
@@ -39,68 +42,70 @@ class InfiniteImage extends React.Component {
           };
         }
       
+        /*
         componentWillMount() {
           // Loads some users on initial load
           this.loadUsers();
         }
+        */
+
+        handleResize(e) {
+            this.setState({windowHeight: window.innerHeight});
+          }
+        
+          componentDidMount() {
+            window.addEventListener('resize', this.handleResize);
+            this.loadUsers();
+          }
+        
+          componentWillUnmount() {
+            window.removeEventListener('resize', this.handleResize);
+          }
       
         loadUsers = () => {
-        var outside 
-          this.setState({ isLoading: true }, () => {
-            fetch('https://hiring.verkada.com/thumbs/1500348260.jpg')
+        //calculate height of screen to know how much height should be filled in
+        var callTime = Math.round(window.innerHeight / 300) +1;
+        var timestamp = 1500348260;
+        let imagesNow = [];
+        //var images =[];
+        for (let i = 0; i < callTime; i++) {
+            //console.log(timestamp);
+        fetch('https://hiring.verkada.com/thumbs/'+ timestamp + '.jpg')
             .then(response => response.blob())
            .then(images => {
             // Then create a local URL for that image and print it 
-            outside = URL.createObjectURL(images)
-            console.log(outside)
+            var createImage = URL.createObjectURL(images);
+            imagesNow.push(createImage);
             this.setState({
-                image: outside
+                images: imagesNow,
             })
-  })
-                // Creates a massaged array of user data
-               // console.log(results);
-                // Merges the next users into our existing users
-                /*
-                this.setState({
-                  // Note: Depending on the API you're using, this value may
-                  // be returned as part of the payload to indicate that there
-                  // is no additional data to be loaded
-                  hasMore: (this.state.image.length < 100),
-                  isLoading: false,
-                  image: results,
-                });
-              })
-
- */             .catch((err) => {
-                this.setState({
-                  error: err.message,
-                  isLoading: false,
-                 });
-              })
-          });
-        }
+            timestamp = timestamp + 20;
+        })
+    }   
+}
       
         render() {
           const {
             error,
             hasMore,
             isLoading,
-            image,
+            images,
           } = this.state;
-      
           return (
-            <div>
-              <h1>Infinite Users!</h1>
-              <p>Scroll down to load more!!</p>
-              <img 
-                     src={image}
-                      style={{
-                        borderRadius: '50%',
-                        height: 72,
-                        marginRight: 20,
-                        width: 72,
-                      }}
-                    />
+            <div> 
+            {images.map((img, i) => (
+                <Fragment key={i}>
+                <img
+                src={img}
+                style={{
+                borderRadius: '50%',
+                height: 300,
+                marginRight: 20,
+                width: 300,
+                }}
+                />
+                </Fragment>
+                ))}
               {error &&
                 <div style={{ color: '#900' }}>
                   {error}
