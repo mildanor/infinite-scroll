@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from './Image';
+import Square from './Square';
 
 class InfiniteImage extends React.Component {
     constructor(props){
@@ -8,17 +9,59 @@ class InfiniteImage extends React.Component {
         this.state = {
            // windowHeight: window.innerHeight,
             imagesPlaceholder: [],
-            starTimestamp: 1500348260,
-            endTimestamp: 1503031520,
-            increaseInterval: 20
+            //starTimestamp: 1500348260,
+            starTimestamp: 8260,
+            endTimestamp: 8520,
+            //endTimestamp: 1503031520,
+            increaseInterval: 20,
+            windowViewportHeight: window.innerHeight,
+            position: window.scrollY,
+            scrolling: false,
         };
-        this.createGrid = this.createGrid.bind(this);
+       // this.createGrid = this.createGrid.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
       }
+/*
+      handleScroll(event) {
+        if (window.scrollY === 0 && this.state.scrolling === true) {
+            this.setState({scrolling: false});
+        }
+        else if (window.scrollY !== 0 && this.state.scrolling !== true) {
+            this.setState({scrolling: true});
+        }
+        console.log(this.state.scrolling);
+    }
 
+    getImages(){
+      if (window.scrollY === 0){
+
+      }
+    }
+    */
+      
+      handleScroll(){
+        this.setState({
+          position: window.scrollY,
+          scrolling: true,
+        })
+
+        console.log(this.state.position);
+      }
+      
+
+      componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+/*
       componentDidMount(){
         this.createGrid();
       }
 
+    
       createGrid(){
         let imagesArray = this.state.imagesPlaceholder;
         //let timestamp = this.state.starTimestamp;
@@ -30,21 +73,25 @@ class InfiniteImage extends React.Component {
           }
           //timestamp = timestamp + 20;
       }
+      */
 
 
       
          render () {
+         //  console.log(this.state.position);
+          // console.log(this.state.windowViewportHeight);
          // console.log(timestamp);
-         let {imagesPlaceholder} = this.state;
-         console.log(imagesPlaceholder);
+        // let {imagesPlaceholder} = this.state;
+        // console.log(imagesPlaceholder);
          return (
-          <div> 
-          
-          {imagesPlaceholder.map((id) => 
-            <Image key={id}  />      
-         )
-        }
-    
+          <div
+          style={{
+            height: ((this.state.endTimestamp - this.state.starTimestamp) / this.state.increaseInterval)*250,
+            }}
+          > 
+          <Square/>
+          <Square/>
+          <Square/>
           </div>
         );
           
