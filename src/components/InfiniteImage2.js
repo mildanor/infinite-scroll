@@ -67,7 +67,7 @@ class InfiniteImage extends React.Component {
             console.log('no more imgs');
             
             this.setState({
-              error: 'More images to load',
+              error: 'No more images to load',
              // message: ,
             })
             break
