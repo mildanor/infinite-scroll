@@ -40,7 +40,7 @@ class InfiniteImage extends React.Component {
         var nRows = window.innerHeight / (imageHeight + marginY) 
         var nCols = 3
         var nStart = 3 * Math.floor(window.scrollY / (imageHeight + marginY))
-        var nEnd = nStart + Math.floor(nRows * nCols)
+        var nEnd = nStart + Math.floor(nRows * nCols) + 1
         console.log("ScrollY = " + window.scrollY + " nStart = " + nStart + " nEnd = " + nEnd);
 
         // Now, knowing the nStart and nEnd, load the relevant images. We'll worry about 
@@ -77,6 +77,7 @@ class InfiniteImage extends React.Component {
 
       getImageTimestampById(image_id){
       var timetampById = this.state.startTimestamp + 20 * image_id
+      console.log(timetampById)
       return timetampById
       }
 
