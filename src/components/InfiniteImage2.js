@@ -14,7 +14,8 @@ class InfiniteImage extends React.Component {
         super(props);
 
         this.state = {
-            error: '',
+          error: false,
+            errorMessage: '',
             hasMore: true,
             //isLoading: false,
             images: [],
@@ -40,7 +41,7 @@ class InfiniteImage extends React.Component {
         var nRows = window.innerHeight / (imageHeight + marginY) 
         var nCols = 3
         var nStart = 3 * Math.floor(window.scrollY / (imageHeight + marginY))
-        var nEnd = nStart + Math.floor(nRows * nCols) + 1
+        var nEnd = nStart + Math.floor(nRows * nCols) + 3
         console.log("ScrollY = " + window.scrollY + " nStart = " + nStart + " nEnd = " + nEnd);
 
         // Now, knowing the nStart and nEnd, load the relevant images. We'll worry about 
@@ -67,7 +68,8 @@ class InfiniteImage extends React.Component {
             console.log('no more imgs');
             
             this.setState({
-              error: 'No more images to load',
+              errorMessage: 'No more images to load',
+              error: true,
              // message: ,
             })
             break
@@ -111,6 +113,7 @@ class InfiniteImage extends React.Component {
         render() {
           console.log("Render is called")
           const {
+            errorMessage,
             error,
             //isLoading,
             images,
@@ -142,17 +145,21 @@ class InfiniteImage extends React.Component {
                 />
                 </Fragment>
                 ))}
-             
-                <div style={{ 
-                  color: 'white',
-                  backgroundColor: '#900',
-                  position: "absolute",
-                  top: (rows * 250 + (rows+1)*marginY)+'px',
-                  left: 30+'px',
-                  height: 30 + 'px'
-               }}>
-                  {error}
-                </div>
+                {error ? 
+                  <div style={{ 
+                    color: 'white',
+                    backgroundColor: '#900',
+                    position: "absolute",
+                    top: (rows * 250 + (rows+1)*marginY)+10+'px',
+                    left: 50+'%',
+                    padding: 10 + 'px',
+                    margin: 3 +'px'
+                 }}>
+                    {errorMessage}
+                  </div>
+                :
+                null
+                } 
             </div>
           );
         }
