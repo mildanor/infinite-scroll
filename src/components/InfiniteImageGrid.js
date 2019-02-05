@@ -5,21 +5,19 @@ const imageWidth = 250;
 const marginX = 20;
 const marginY = 10
 
-class InfiniteImage extends React.Component {
+class InfiniteImageGrid extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
           error: false,
-            errorMessage: '',
-            hasMore: true,
-            images: [],
-            startTimestamp: 1500348260,
-            endTimestamp: 1503031520,
-            increaseInterval: 20,
-            position: window.scrollY,
-           scrolling: false,
-           message: ''
+          errorMessage: '',
+          images: [],
+          startTimestamp: 1500348260,
+          endTimestamp: 1503031520,
+          increaseInterval: 20,
+          position: window.scrollY,
+          loading: false,
         };
         this.handleScroll = this.handleScroll.bind(this);
         this.loadImagesBetweenIds = this.loadImagesBetweenIds.bind(this);
@@ -28,7 +26,6 @@ class InfiniteImage extends React.Component {
        handleScroll(){
         this.setState({
           position: window.scrollY,
-          scrolling: true,
         })
         //console.log("Scrolled")
 
@@ -42,13 +39,12 @@ class InfiniteImage extends React.Component {
     }
   
     loadImagesBetweenIds(startId, endId){
-     // var timestamp = this.state.startTimestamp;
-      //var increaseInterval = this.state.increaseInterval;
       this.setState({
         images: [],
+        loading: true,
       });
+      //console.log("Loading");
       let imagesNow = this.state.images;
-      //let imagesNow = this.state.images = [];
        for(var i = startId; i<=endId; i++){
          // console.log("Loading id " + i);
           var url = ('https://hiring.verkada.com/thumbs/'+ this.getImageTimestampById(i) + '.jpg')
@@ -58,13 +54,14 @@ class InfiniteImage extends React.Component {
           imagesNow.push([url, x, y]);
           this.setState({
             images: imagesNow,
+            loading: false,
           });
           if (this.getImageTimestampById(i)+this.state.increaseInterval > this.state.endTimestamp){
             //console.log('no more imgs');
-            
             this.setState({
               errorMessage: 'No more images to load',
               error: true,
+              loading: false,
             })
             break
           }
@@ -107,12 +104,27 @@ class InfiniteImage extends React.Component {
             images,
             startTimestamp,
             endTimestamp,
-            increaseInterval
+            increaseInterval,
+            loading
           } = this.state;
          const rows = Math.ceil((((endTimestamp - startTimestamp)/increaseInterval)+2)/3);
+         if (loading === true) {
           return (
+              <div style={{ 
+                color: 'white',
+                backgroundColor: '#900',
+                top: 50 + '%',
+                left: 50+'%',
+                position: "absolute",
+                padding: 20 + 'px',
+             }}>
+                <p>Please wait for images to load</p>
+              </div>
+          )
+         } else { 
+           return (
             <div style={{
-              height: (rows * 250 + (rows+1)*marginY) ,
+              height: (rows * imageHeight + (rows+1)*marginY) ,
               }}> 
             {images.map((img, i) => (
                 <Fragment key={i}>
@@ -148,7 +160,8 @@ class InfiniteImage extends React.Component {
                 null
                 } 
             </div>
-          );
+          )
+          }
         }
       }
-      export default InfiniteImage;
+      export default InfiniteImageGrid;

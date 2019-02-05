@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import InfiniteImage from './components/InfiniteImage2';
+import InfiniteImageGrid from './components/InfiniteImageGrid';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <InfiniteImage/>
+        <InfiniteImageGrid/>
       </div>
     );
   }
