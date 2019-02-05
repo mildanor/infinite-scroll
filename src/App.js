@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import InfiniteImageGrid from './components/InfiniteImageGrid';
+import InfiniteImageGrid from './InfiniteImageGrid';
 
 class App extends Component {
   render() {
