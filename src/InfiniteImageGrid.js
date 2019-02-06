@@ -105,23 +105,8 @@ class InfiniteImageGrid extends React.Component {
             startTimestamp,
             endTimestamp,
             increaseInterval,
-            loading
           } = this.state;
          const rows = Math.ceil((((endTimestamp - startTimestamp)/increaseInterval)+2)/3);
-         if (loading === true) {
-          return (
-              <div style={{ 
-                color: 'white',
-                backgroundColor: '#900',
-                top: 50 + '%',
-                left: 50+'%',
-                position: "absolute",
-                padding: 20 + 'px',
-             }}>
-                <p>Please wait for images to load</p>
-              </div>
-          )
-         } else { 
            return (
             <div style={{
               height: (rows * imageHeight + (rows+1)*marginY) ,
@@ -163,5 +148,4 @@ class InfiniteImageGrid extends React.Component {
           )
           }
         }
-      }
       export default InfiniteImageGrid;
