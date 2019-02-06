@@ -1,4 +1,4 @@
-##Instructions to run
+## Instructions to run
 
 Make sure you have node and npm installed. Then:
 * Npm install
