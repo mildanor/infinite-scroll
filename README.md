@@ -1,6 +1,6 @@
 ## Instructions to run
 
-Make sure you have node and npm installed. Then:
+Make sure you have node and npm installed. Then in the project directory/folder run:
 * Npm install
 * Npm start
 
