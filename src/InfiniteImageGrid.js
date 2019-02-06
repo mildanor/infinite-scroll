@@ -17,7 +17,6 @@ class InfiniteImageGrid extends React.Component {
           endTimestamp: 1503031520,
           increaseInterval: 20,
           position: window.scrollY,
-          loading: false,
         };
         this.handleScroll = this.handleScroll.bind(this);
         this.loadImagesBetweenIds = this.loadImagesBetweenIds.bind(this);
@@ -41,7 +40,6 @@ class InfiniteImageGrid extends React.Component {
     loadImagesBetweenIds(startId, endId){
       this.setState({
         images: [],
-        loading: true,
       });
       //console.log("Loading");
       let imagesNow = this.state.images;
@@ -54,14 +52,12 @@ class InfiniteImageGrid extends React.Component {
           imagesNow.push([url, x, y]);
           this.setState({
             images: imagesNow,
-            loading: false,
           });
           if (this.getImageTimestampById(i)+this.state.increaseInterval > this.state.endTimestamp){
             //console.log('no more imgs');
             this.setState({
               errorMessage: 'No more images to load',
               error: true,
-              loading: false,
             })
             break
           }
@@ -134,7 +130,7 @@ class InfiniteImageGrid extends React.Component {
                     color: 'white',
                     backgroundColor: '#900',
                     position: "absolute",
-                    top: (rows * 250 + (rows+1)*marginY)+10+'px',
+                    top: (rows * imageHeight + (rows+1)*marginY)+10+'px',
                     left: 47+'%',
                     padding: 10 + 'px',
                     margin: 1 +'%'
