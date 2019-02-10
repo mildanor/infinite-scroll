@@ -41,7 +41,6 @@ class InfiniteImageGrid extends React.Component {
       this.setState({
         images: [],
       });
-      //console.log("Loading");
       let imagesNow = this.state.images;
        for(var i = startId; i<=endId; i++){
          // console.log("Loading id " + i);
