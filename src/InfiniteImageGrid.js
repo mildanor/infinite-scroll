@@ -1,8 +1,6 @@
 import React, {Fragment } from 'react';
 
-//const imageHeight = 250;
 const imageHeight = 240;
-//const imageWidth = 250;
 const imageWidth = 320;
 
 const marginX = 10;
@@ -21,23 +19,19 @@ class InfiniteImageGrid extends React.Component {
           increaseInterval: 20,
           position: window.scrollY,
         };
-        this.handleScroll = this.handleScroll.bind(this);
-        this.loadImagesBetweenIds = this.loadImagesBetweenIds.bind(this);
       }
-      
-       handleScroll(){
-        this.setState({
-          position: window.scrollY,
-        })
-        //console.log("Scrolled")
 
-        let nRows = window.innerHeight / (imageHeight + marginY) 
-        const nCols = 3
-        let nStart = 3 * Math.floor(window.scrollY / (imageHeight + marginY))
-        let nEnd = nStart + Math.floor(nRows * nCols) + 12
-       // console.log("ScrollY = " + window.scrollY + " nStart = " + nStart + " nEnd = " + nEnd);
-       this.loadImagesBetweenIds(nStart, nEnd)
-        
+   handleScroll = () => { 
+    this.setState({
+      position: window.scrollY,
+    })
+    //console.log("Scrolled")
+    let nRows = window.innerHeight / (imageHeight + marginY) 
+    const nCols = 3
+    let nStart = 3 * Math.floor(window.scrollY / (imageHeight + marginY))
+    let nEnd = nStart + Math.floor(nRows * nCols) + 12
+   // console.log("ScrollY = " + window.scrollY + " nStart = " + nStart + " nEnd = " + nEnd);
+    this.loadImagesBetweenIds(nStart, nEnd)
     }
   
     loadImagesBetweenIds(startId, endId){
