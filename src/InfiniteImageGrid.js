@@ -104,7 +104,7 @@ render() {
         height: (rows * imageHeight + (rows+1)*marginY) ,
         position: 'absolute',
         textAlign: 'center',
-         width: imageWidth * 3 + marginX * 6 + 'px'
+        width: imageWidth * 3 + marginX * 6 + 'px'
          //the sum of margins + width
          }}> 
          {images.map((img) => (
