@@ -9,7 +9,6 @@ const marginY = 10
 class InfiniteImageGrid extends React.Component {
     constructor(props){
         super(props);
-
         this.state = {
           error: false,
           errorMessage: '',
@@ -90,57 +89,57 @@ class InfiniteImageGrid extends React.Component {
         window.removeEventListener('scroll', this.handleScroll);
     }
       
-        render() {
-          const {
-            errorMessage,
-            error,
-            images,
-            startTimestamp,
-            endTimestamp,
-            increaseInterval,
-          } = this.state;
-         const rows = Math.ceil((((endTimestamp - startTimestamp)/increaseInterval)+2)/3);
-          return (
-            <div style={{
-              height: (rows * imageHeight + (rows+1)*marginY) ,
-              position: 'absolute',
-              textAlign: 'center',
-              width: imageWidth * 3 + marginX * 6 + 'px'
-              //the sum of margins + width
-              }}> 
-              {images.map((img) => (
-                <img
-                key={img[3]}
-                src={img[0]}
-                alt={''}
-                style={{
-                height: imageHeight,
-                marginLeft: marginX + 'px',
-                marginRight: marginX +'px',
-                marginTop: 10,
-                width: imageWidth,
-                left: img[1],
-                top: img[2],
-                position: "absolute",
-                }}
-                />
-                ))} 
-                {error ? 
-                  <div style={{ 
-                    color: 'white',
-                    backgroundColor: '#900',
-                    position: "absolute",
-                    top: (rows * imageHeight + (rows+1)*marginY)+10+'px',
-                    left: 47+'%',
-                    padding: 10 + 'px',
-                    margin: 1 +'%'
-                 }}>
-                    {errorMessage}
-                  </div>
-                :
-                null
-                } 
-                </div>
+render() {
+  const {
+    errorMessage,
+    error,
+    images,
+    startTimestamp,
+    endTimestamp,
+    increaseInterval,
+  } = this.state;
+  const rows = Math.ceil((((endTimestamp - startTimestamp)/increaseInterval)+2)/3);
+  return (
+     <div style={{
+        height: (rows * imageHeight + (rows+1)*marginY) ,
+        position: 'absolute',
+        textAlign: 'center',
+         width: imageWidth * 3 + marginX * 6 + 'px'
+         //the sum of margins + width
+         }}> 
+         {images.map((img) => (
+           <img
+           key={img[3]}
+           src={img[0]}
+           alt={''}
+           style={{
+           height: imageHeight,
+           marginLeft: marginX + 'px',
+           marginRight: marginX +'px',
+           marginTop: 10,
+           width: imageWidth,
+           left: img[1],
+           top: img[2],
+           position: "absolute",
+            }}
+           />
+          ))} 
+          {error ? 
+          <div style={{ 
+           color: 'white',
+           backgroundColor: '#900',
+           position: "absolute",
+           top: (rows * imageHeight + (rows+1)*marginY)+10+'px',
+           left: 47+'%',
+           padding: 10 + 'px',
+           margin: 1 +'%'
+          }}>
+          {errorMessage}
+           </div>
+          :
+          null
+          } 
+           </div>
           )
           }
         }
