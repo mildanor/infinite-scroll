@@ -1,4 +1,4 @@
-import React, {Fragment } from 'react';
+import React from 'react';
 
 const imageHeight = 240;
 const imageWidth = 320;
@@ -33,7 +33,7 @@ class InfiniteImageGrid extends React.Component {
    // console.log("ScrollY = " + window.scrollY + " nStart = " + nStart + " nEnd = " + nEnd);
     this.loadImagesBetweenIds(nStart, nEnd)
     }
-  
+
     loadImagesBetweenIds(startId, endId){
       this.setState({
         images: [],
@@ -44,8 +44,9 @@ class InfiniteImageGrid extends React.Component {
           let url = ('https://hiring.verkada.com/thumbs/'+ this.getImageTimestampById(i) + '.jpg')
           let x = this.getImagePositionXById(i)
           let y = this.getImagePositionYById(i)
+          let key = this.getImageTimestampById(i);
          // console.log("Image " + i + " at ("+x+","+y+")" )
-          imagesNow.push([url, x, y]);
+          imagesNow.push([url, x, y, key]);
           this.setState({
             images: imagesNow,
           });
@@ -99,7 +100,7 @@ class InfiniteImageGrid extends React.Component {
             increaseInterval,
           } = this.state;
          const rows = Math.ceil((((endTimestamp - startTimestamp)/increaseInterval)+2)/3);
-           return (
+          return (
             <div style={{
               height: (rows * imageHeight + (rows+1)*marginY) ,
               position: 'absolute',
@@ -107,15 +108,15 @@ class InfiniteImageGrid extends React.Component {
               width: imageWidth * 3 + marginX * 6 + 'px'
               //the sum of margins + width
               }}> 
-            {images.map((img, i) => (
-                <Fragment key={i}>
+              {images.map((img) => (
                 <img
+                key={img[3]}
                 src={img[0]}
                 alt={''}
                 style={{
                 height: imageHeight,
                 marginLeft: marginX + 'px',
-                marginRight: 10+'px',
+                marginRight: marginX +'px',
                 marginTop: 10,
                 width: imageWidth,
                 left: img[1],
@@ -123,8 +124,7 @@ class InfiniteImageGrid extends React.Component {
                 position: "absolute",
                 }}
                 />
-                </Fragment>
-                ))}
+                ))} 
                 {error ? 
                   <div style={{ 
                     color: 'white',
